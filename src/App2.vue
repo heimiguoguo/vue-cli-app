@@ -1,23 +1,33 @@
 <template>
-  <div id="app">
-    <h3>{{count}}</h3>
-    <h3>{{age}}</h3>
-    <button @click="increment()">increment</button>
-    <button @click="incrementBy({amount:10})">incrementBy</button>
-    <button @click="incrementAsync({amount:10})">incrementAsync</button>
+  <div id="app" style="width: 200px; height: 200px">
+    <vue-cropper
+      ref="cropper"
+      :img="option.img"
+      :outputSize="option.size"
+      :outputType="option.outputType"
+      autoCrop
+      centerBox
+    ></vue-cropper>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { VueCropper } from 'vue-cropper'
+
 export default {
-  name: "App",
-  computed: mapState(["count", "age"]),
-  methods: {
-    ...mapMutations(["increment", "incrementBy"]),
-    ...mapActions(["incrementAsync"])
+  components: {
+    VueCropper
+  },
+  data () {
+    return {
+      option: {
+        img: 'static/bg.png',
+        size: 1,
+        outputType: 'webp'
+      }
+    }
   }
-};
+}
 </script>
 
 <style>

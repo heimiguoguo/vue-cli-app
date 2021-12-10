@@ -1,38 +1,51 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import User from '@/components/User'
-import Profile from '@/components/Profile'
-import Posts from '@/components/Posts'
-import Home from '@/components/Home'
+import Cookies from 'js-cookie'
+// import Home from '@/components/Home'
+import Register from '@/components/Register'
+import Login from '@/components/Login'
+import Room from '@/components/Room'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Home',
+      component: Room
     },
     {
-      path: '/user/:id',
-      name: 'user',
-      component: User,
-      children: [
-        {
-          path: 'profile',
-          component: Profile
-        },
-        {
-          path: 'posts',
-          component: Posts
-        },
-        {
-          path: '',
-          component: Home
-        }
-      ]
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/room',
+      name: 'Room',
+      component: Room
     }
   ]
 })
+
+function isAuthenticated () {
+  // console.log(Cookies.get('koa.sess'))
+  return Cookies.get('koa.sess')
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Register') {
+    next()
+  } else if (to.name !== 'Login' && !isAuthenticated()) {
+    next({ name: 'Login' })
+  } else {
+    next()
+  }
+})
+
+export default router

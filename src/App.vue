@@ -1,25 +1,42 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-link to="/">HelloWorld</router-link>
-    <router-link to="/User">User</router-link>
-    <router-view/>
+  <div id="app" class="hello">
+    <Header></Header>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
+import Header from './components/Header'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Header
+  }
 }
 </script>
 
 <style>
+body {
+  margin: 0;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.content {
+  flex: 1;
+  margin: 10px;
+  align-items: center;
+}
+
+#login-form .el-card {
+  background-color: rgb(256,256,256, 0.5);
 }
 </style>
